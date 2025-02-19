@@ -1,0 +1,126 @@
+* {
+    box-sizing: border-box;
+    -webkit-tap-highlight-color: transparent;
+}
+
+body {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    margin: 0;
+    background-color: #f0f0f0;
+    font-family: Arial, sans-serif;
+    padding: 15px;
+}
+
+.calculator {
+    background-color: #333;
+    border-radius: 10px;
+    padding: 15px;
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.3);
+    width: 100%;
+    max-width: 400px;
+}
+
+#display {
+    width: 100%;
+    height: 70px;
+    margin-bottom: 15px;
+    font-size: 28px;
+    text-align: right;
+    padding: 10px;
+    background-color: #fff;
+    border: none;
+    border-radius: 5px;
+    box-sizing: border-box;
+}
+
+.buttons {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 8px;
+    margin-bottom: 15px;
+}
+
+.credits {
+    text-align: center;
+    color: #fff;
+    font-size: 14px;
+    padding: 5px;
+    border-top: 1px solid #555;
+    margin-top: 10px;
+}
+
+button {
+    padding: 20px 10px;
+    font-size: 20px;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    background-color: #666;
+    color: white;
+    transition: background-color 0.2s;
+    touch-action: manipulation;
+    -webkit-touch-callout: none;
+    -webkit-user-select: none;
+    user-select: none;
+    min-height: 60px;
+}
+
+@media (max-width: 380px) {
+    button {
+        padding: 15px 5px;
+        font-size: 18px;
+        min-height: 50px;
+    }
+    
+    .calculator {
+        padding: 10px;
+    }
+    
+    #display {
+        height: 60px;
+        font-size: 24px;
+    }
+}
+
+button:active {
+    background-color: #999;
+    transform: scale(0.95);
+}
+
+.operator {
+    background-color: #ff9500;
+}
+
+.operator:active {
+    background-color: #ffaa33;
+}
+
+.function {
+    background-color: #444;
+}
+
+.function:active {
+    background-color: #777;
+}
+
+.equal {
+    background-color: #2196F3;
+    grid-column: span 2;
+}
+
+.equal:active {
+    background-color: #42a5f5;
+}
+
+.calculator {
+    -webkit-touch-callout: none;
+    -webkit-user-select: none;
+    user-select: none;
+}
+
+input[type="text"] {
+    font-size: 16px;
+}
