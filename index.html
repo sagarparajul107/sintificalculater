@@ -1,45 +1,410 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-    <title>Scientific Calculator</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <link rel="stylesheet" href="styles.css">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Beautiful Calculator by Sagar Parajuli</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: Arial, sans-serif;
+        }
+
+        body {
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background: linear-gradient(45deg, #8e2de2, #4a00e0);
+            padding: 15px;
+        }
+
+        .container {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            padding: 20px;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+            width: 100%;
+            max-width: 400px;
+        }
+
+        .tabs {
+            display: flex;
+            margin-bottom: 20px;
+            gap: 5px;
+        }
+
+        .tab {
+            flex: 1;
+            padding: 12px;
+            text-align: center;
+            background: rgba(255, 255, 255, 0.1);
+            color: white;
+            cursor: pointer;
+            transition: 0.3s;
+            border-radius: 10px;
+            font-size: 0.9em;
+        }
+
+        .tab.active {
+            background: rgba(255, 255, 255, 0.2);
+            transform: scale(1.02);
+        }
+
+        #display {
+            width: 100%;
+            height: 70px;
+            margin-bottom: 20px;
+            padding: 15px;
+            font-size: 1.8em;
+            text-align: right;
+            background: rgba(255, 255, 255, 0.1);
+            color: white;
+            border: none;
+            border-radius: 10px;
+        }
+
+        .buttons {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 12px;
+        }
+
+        button {
+            padding: 15px;
+            font-size: 1.2em;
+            border: none;
+            border-radius: 10px;
+            background: rgba(255, 255, 255, 0.1);
+            color: white;
+            cursor: pointer;
+            transition: 0.3s;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        button:active {
+            transform: scale(0.95);
+        }
+
+        button:hover {
+            background: rgba(255, 255, 255, 0.2);
+        }
+
+        .operator {
+            background: rgba(74, 0, 224, 0.3);
+        }
+
+        .equals {
+            background: #4a00e0;
+        }
+
+        .currency-converter, .history-section {
+            display: none;
+        }
+
+        .currency-converter select, 
+        .currency-converter input {
+            width: 100%;
+            padding: 12px;
+            margin-bottom: 12px;
+            border: none;
+            border-radius: 10px;
+            background: rgba(255, 255, 255, 0.1);
+            color: white;
+            font-size: 1.1em;
+        }
+
+        .currency-converter option {
+            background: #4a00e0;
+            color: white;
+        }
+
+        .history-list {
+            max-height: 200px;
+            overflow-y: auto;
+            margin: 15px 0;
+            padding: 10px;
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 10px;
+        }
+
+        .history-item {
+            padding: 10px;
+            margin-bottom: 8px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 8px;
+            color: white;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+
+        .history-item:hover {
+            background: rgba(255, 255, 255, 0.2);
+        }
+
+        .clear-history {
+            width: 100%;
+            padding: 10px;
+            background: rgba(255, 0, 0, 0.3);
+            color: white;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+
+        .clear-history:hover {
+            background: rgba(255, 0, 0, 0.4);
+        }
+
+        .credit {
+            text-align: center;
+            color: white;
+            margin-top: 20px;
+            font-size: 0.9em;
+            padding: 10px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 10px;
+        }
+    </style>
 </head>
 <body>
-    <div class="calculator">
-        <input type="text" id="display" readonly>
-        <div class="buttons">
-            <button class="function" onclick="clearDisplay()">C</button>
-            <button class="function" onclick="backspace()">⌫</button>
-            <button class="operator" onclick="addToDisplay('(')">(</button>
-            <button class="operator" onclick="addToDisplay(')')">)</button>
-            
-            <button class="function" onclick="addToDisplay('sin(')">sin</button>
-            <button class="function" onclick="addToDisplay('cos(')">cos</button>
-            <button class="function" onclick="addToDisplay('tan(')">tan</button>
-            <button class="operator" onclick="addToDisplay('/')">/</button>
-            
-            <button onclick="addToDisplay('7')">7</button>
-            <button onclick="addToDisplay('8')">8</button>
-            <button onclick="addToDisplay('9')">9</button>
-            <button class="operator" onclick="addToDisplay('*')">×</button>
-            
-            <button onclick="addToDisplay('4')">4</button>
-            <button onclick="addToDisplay('5')">5</button>
-            <button onclick="addToDisplay('6')">6</button>
-            <button class="operator" onclick="addToDisplay('-')">-</button>
-            
-            <button onclick="addToDisplay('1')">1</button>
-            <button onclick="addToDisplay('2')">2</button>
-            <button onclick="addToDisplay('3')">3</button>
-            <button class="operator" onclick="addToDisplay('+')">+</button>
-            
-            <button onclick="addToDisplay('0')">0</button>
-            <button onclick="addToDisplay('.')">.</button>
-            <button class="equal" onclick="calculate()">=</button>
+    <div class="container">
+        <div class="tabs">
+            <div class="tab active" onclick="showTab('calculator')">Calculator</div>
+            <div class="tab" onclick="showTab('currency')">Currency</div>
+            <div class="tab" onclick="showTab('history')">History</div>
         </div>
-        <div class="credits">Made by Sagar Parajuli</div>
+
+        <div class="calculator">
+            <input type="text" id="display" readonly>
+            <div class="buttons">
+                <button onclick="clearDisplay()">C</button>
+                <button onclick="deleteChar()">←</button>
+                <button onclick="appendToDisplay('%')" class="operator">%</button>
+                <button onclick="appendToDisplay('/')" class="operator">÷</button>
+                <button onclick="appendToDisplay('7')">7</button>
+                <button onclick="appendToDisplay('8')">8</button>
+                <button onclick="appendToDisplay('9')">9</button>
+                <button onclick="appendToDisplay('*')" class="operator">×</button>
+                <button onclick="appendToDisplay('4')">4</button>
+                <button onclick="appendToDisplay('5')">5</button>
+                <button onclick="appendToDisplay('6')">6</button>
+                <button onclick="appendToDisplay('-')" class="operator">-</button>
+                <button onclick="appendToDisplay('1')">1</button>
+                <button onclick="appendToDisplay('2')">2</button>
+                <button onclick="appendToDisplay('3')">3</button>
+                <button onclick="appendToDisplay('+')" class="operator">+</button>
+                <button onclick="appendToDisplay('0')">0</button>
+                <button onclick="appendToDisplay('.')">.</button>
+                <button onclick="calculate()" class="equals" style="grid-column: span 2">=</button>
+            </div>
+        </div>
+
+        <div class="currency-converter">
+            <input type="number" id="amount" placeholder="Amount">
+            <select id="fromCurrency">
+                <option value="USD">USD</option>
+                <option value="EUR">EUR</option>
+                <option value="GBP">GBP</option>
+                <option value="JPY">JPY</option>
+                <option value="NPR">NPR</option>
+                <option value="INR">INR</option>
+            </select>
+            <select id="toCurrency">
+                <option value="EUR">EUR</option>
+                <option value="USD">USD</option>
+                <option value="GBP">GBP</option>
+                <option value="JPY">JPY</option>
+                <option value="NPR">NPR</option>
+                <option value="INR">INR</option>
+            </select>
+            <button onclick="convertCurrency()" class="equals">Convert</button>
+            <input type="text" id="result" readonly placeholder="Result">
+        </div>
+
+        <div class="history-section">
+            <div class="history-list" id="historyList"></div>
+            <button class="clear-history" onclick="clearHistory()">Clear History</button>
+        </div>
+
+        <div class="credit">Made by Sagar Parajuli</div>
     </div>
-    <script src="script.js"></script>
+
+    <script>
+        const display = document.getElementById('display');
+        let currentTab = 'calculator';
+        let history = [];
+
+        function showTab(tab) {
+            document.querySelector('.calculator').style.display = 'none';
+            document.querySelector('.currency-converter').style.display = 'none';
+            document.querySelector('.history-section').style.display = 'none';
+
+            document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+
+            if (tab === 'calculator') {
+                document.querySelector('.calculator').style.display = 'block';
+                document.querySelectorAll('.tab')[0].classList.add('active');
+            } else if (tab === 'currency') {
+                document.querySelector('.currency-converter').style.display = 'block';
+                document.querySelectorAll('.tab')[1].classList.add('active');
+            } else if (tab === 'history') {
+                document.querySelector('.history-section').style.display = 'block';
+                document.querySelectorAll('.tab')[2].classList.add('active');
+                updateHistoryDisplay();
+            }
+            currentTab = tab;
+        }
+
+        function appendToDisplay(value) {
+            // Prevent multiple operators in a row
+            const lastChar = display.value.slice(-1);
+            const operators = ['+', '-', '*', '/', '%', '.'];
+            
+            if (operators.includes(value) && operators.includes(lastChar)) {
+                return;
+            }
+
+            // Prevent multiple decimal points in a number
+            if (value === '.' && display.value.split(/[-+*/%]/).pop().includes('.')) {
+                return;
+            }
+
+            display.value += value;
+        }
+
+        function clearDisplay() {
+            display.value = '';
+        }
+
+        function deleteChar() {
+            display.value = display.value.slice(0, -1);
+        }
+
+        function calculate() {
+            try {
+                const expression = display.value
+                    .replace(/×/g, '*')
+                    .replace(/÷/g, '/');
+                
+                // Validate expression
+                if (!expression) return;
+                if (!/^[0-9+\-*/.%()\s]+$/.test(expression)) {
+                    throw new Error('Invalid characters');
+                }
+
+                // Calculate result
+                const result = Function('"use strict";return (' + expression + ')')();
+                
+                // Format result
+                const formattedResult = Number.isInteger(result) ? 
+                    result.toString() : 
+                    parseFloat(result.toFixed(8)).toString();
+                
+                // Add to history
+                addToHistory(`${display.value} = ${formattedResult}`);
+                
+                // Update display
+                display.value = formattedResult;
+            } catch (error) {
+                display.value = 'Error';
+                setTimeout(clearDisplay, 1000);
+            }
+        }
+
+        function addToHistory(calculation) {
+            history.unshift(calculation);
+            if (history.length > 10) {
+                history.pop();
+            }
+            localStorage.setItem('calculatorHistory', JSON.stringify(history));
+            updateHistoryDisplay();
+        }
+
+        function updateHistoryDisplay() {
+            const historyList = document.getElementById('historyList');
+            historyList.innerHTML = '';
+            history.forEach(calc => {
+                const historyItem = document.createElement('div');
+                historyItem.className = 'history-item';
+                historyItem.textContent = calc;
+                historyItem.onclick = () => loadFromHistory(calc);
+                historyList.appendChild(historyItem);
+            });
+        }
+
+        function loadFromHistory(calculation) {
+            const result = calculation.split(' = ')[1];
+            display.value = result;
+            showTab('calculator');
+        }
+
+        function clearHistory() {
+            history = [];
+            localStorage.removeItem('calculatorHistory');
+            updateHistoryDisplay();
+        }
+
+        const exchangeRates = {
+            USD: 1,
+            EUR: 0.85,
+            GBP: 0.73,
+            JPY: 110.0,
+            NPR: 132.0,
+            INR: 83.0
+        };
+
+        function convertCurrency() {
+            const amount = parseFloat(document.getElementById('amount').value);
+            if (isNaN(amount)) {
+                document.getElementById('result').value = 'Please enter a valid amount';
+                return;
+            }
+
+            const fromCurrency = document.getElementById('fromCurrency').value;
+            const toCurrency = document.getElementById('toCurrency').value;
+
+            const inUSD = amount / exchangeRates[fromCurrency];
+            const result = inUSD * exchangeRates[toCurrency];
+
+            const resultText = `${amount.toFixed(2)} ${fromCurrency} = ${result.toFixed(2)} ${toCurrency}`;
+            document.getElementById('result').value = resultText;
+            addToHistory(resultText);
+        }
+
+        // Load history from localStorage on page load
+        window.onload = function() {
+            const savedHistory = localStorage.getItem('calculatorHistory');
+            if (savedHistory) {
+                try {
+                    history = JSON.parse(savedHistory);
+                    updateHistoryDisplay();
+                } catch (error) {
+                    localStorage.removeItem('calculatorHistory');
+                    history = [];
+                }
+            }
+            // Show calculator tab by default
+            showTab('calculator');
+        };
+
+        // Add keyboard support
+        document.addEventListener('keydown', (event) => {
+            const key = event.key;
+            if (/[0-9+\-*/.%]/.test(key)) {
+                appendToDisplay(key);
+            } else if (key === 'Enter') {
+                calculate();
+            } else if (key === 'Backspace') {
+                deleteChar();
+            } else if (key === 'Escape') {
+                clearDisplay();
+            }
+        });
+    </script>
 </body>
 </html>
